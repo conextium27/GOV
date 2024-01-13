@@ -1,0 +1,28 @@
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/">Sales Order Management</a>
+    </div>
+  </nav>
+  
+  <div class="container-fluid">
+    <div class="row">
+      <nav id="sidebar" class="col-md-2 d-md-block bg-light sidebar">
+        <div class="position-sticky">
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/createOrder">Creating order</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/consultOrders">Consultation orders </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+  
+      <main class="col-md-10 ms-sm-auto px-md-4">
+        <router-outlet></router-outlet> 
+        contenido
+      </main>
+    </div>
+  </div>
+  

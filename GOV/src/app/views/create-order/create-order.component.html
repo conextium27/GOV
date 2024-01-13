@@ -1,0 +1,106 @@
+<div class="container col-md-20 mt-4">
+  <h2>Create Sales Order</h2>
+  <form [formGroup]="newOrderForm" (ngSubmit)="addOrder()">
+    <div class="row">
+      <div class="col-md-3 mb-3">
+        <label class="form-label">Customer Name</label>
+        <input type="text" id="customerName" class="form-control" formControlName="customerName" />
+        <div class="text-danger" *ngIf="newOrderForm.get('customerName')?.hasError('required')">
+          The name is required.
+        </div>
+        <div *ngIf="newOrderForm.get('customerName')?.hasError('pattern')">
+          Only text.
+        </div>
+      </div>
+
+      <div class="col-md-3 mb-3">
+        <label class="form-label">Item(s) purchased.</label>
+        <input type="number" class="form-control" id="itemPurchased" formControlName="itemPurchased" required>
+        <div class="text-danger" *ngIf="newOrderForm.get('itemPurchased')?.hasError('required')">
+          The field is required.
+        </div>
+        <div *ngIf="newOrderForm.get('itemPurchased')?.hasError('pattern')">
+          Only numbers.
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <label class="form-label">Item Name</label>
+        <input type="text" class="form-control" id="itemName" formControlName="itemName" required>
+        <div class="text-danger" *ngIf="newOrderForm.get('itemName')?.hasError('required')">
+          The Item name is required.
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <label class="form-label">Item Price</label>
+        <input type="number" class="form-control" id="itemPrice" formControlName="itemPrice" required>
+        <div class="text-danger" *ngIf="newOrderForm.get('itemPrice')?.hasError('required')">
+          The field is required.
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      
+      <!-- <div class=" col-md-3 mb-3">
+        <label class="form-label">Item Quantity</label>
+        <input type="number" class="form-control" id="itemQuantity" 
+        formControlName="itemQuantity" required>
+      </div> -->
+    </div>
+
+
+
+
+
+
+    <button type="submit" [disabled]="newOrderForm.invalid" class="btn btn-primary">Create Order</button>
+  </form>
+
+  <!-- <div class="mt-4">
+      <h3>Sales Order Detail</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+       <tbody>
+          <tr *ngFor="let articulo of ordenVentaService.ordenVenta.articulos">
+            <td>{{ articulo.nombre }}</td>
+            <td>{{ articulo.precio | currency }}</td>
+            <td>{{ articulo.cantidad }}</td>
+          </tr>
+        </tbody> 
+      </table>
+    </div>-->
+  <div class="container mt-4">
+    <h2>Details of Purchased Items</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Creation Date</th>
+          <th>Cancellation Date</th>
+          <th>Customer Name</th>
+          <th>Item Name</th>
+          <th>Price</th>
+          <th>Amount</th>
+          <th>Subtotal</th>
+          <th>VAT</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr *ngFor="let articulo of ordenVentaService.ordenVenta.articulos">
+            <td>{{ articulo.nombre }}</td>
+            <td>{{ articulo.precio | currency }}</td>
+            <td>{{ articulo.cantidad }}</td>
+            <td>{{ (articulo.precio * articulo.cantidad) | currency }}</td>
+            <td>{{ ((articulo.precio * articulo.cantidad) * 0.16) | currency }}</td>
+            <td>{{ ((articulo.precio * articulo.cantidad) * 1.16) | currency }}</td> 
+          </tr> -->
+      </tbody>
+    </table>
+  </div>
+</div>
