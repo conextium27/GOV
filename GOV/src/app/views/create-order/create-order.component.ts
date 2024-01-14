@@ -1,5 +1,9 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { OrderSaleService } from '../../services/local-storage.service';
+import { OrderSale } from '../../models/orderSale.model';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ModalComponent } from '../../components/modal/modal.component';
 
 
 
@@ -8,39 +12,102 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
   templateUrl: './create-order.component.html',
   styleUrls: ['./create-order.component.scss']
 })
-export class CreateOrderComponent implements OnInit{
+export class CreateOrderComponent implements OnInit {
 
   newOrderForm: FormGroup;
-  
-  // newOrderForm: FormGroup = new FormGroup({
-  //   customerName: new FormControl(''),
-  //   itemQuantity: new FormControl(''),
-  //   itemName: new FormControl(''),
-  //   itemPrice: new FormControl('')
-  // });
-  // submitted = false;
-
-  constructor(private formBuilder: FormBuilder) {
+  orderSales: OrderSale[];
+  dateNow: string = '';
+  bsModalRef!: BsModalRef;
+  constructor(private formBuilder: FormBuilder,
+    private orderSaleService: OrderSaleService,
+    private modalService: BsModalService) {
     this.newOrderForm = this.formBuilder.group({
       customerName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z ]*$/)]],
-      itemPurchased: ['', [Validators.required, Validators.pattern(/^[0-9 ]*$/)]],
       itemName: ['', [Validators.required]],
       itemPrice: ['', [Validators.required]],
-    }
-
-    )
-    
+      amountItem: ['', [Validators.required, Validators.pattern(/^[0-9 ]*$/)]],
+    })
+    this.orderSales = this.orderSaleService.getOrderSales();
   }
   ngOnInit(): void {
-    
+    const date = new Date();
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    this.dateNow = `${day}/${month}/${year}`.toString()
+  }
+  openModal(): void {
+    this.bsModalRef = this.modalService.show(ModalComponent, {
+      initialState: {
+        titleModal: 'Item already purchased',
+        subtitleModal: 'Item was already used in a previous purchase order,' +
+          'the price of the first item must be respected, you have set a price of: ',
+        infoModal: this.newOrderForm.value.itemPrice,
+      },
+    });
   }
 
-  
-  addOrder(){
+  addOrder() {
     if (this.newOrderForm.valid) {
-      // Lógica para enviar el formulario
-      console.log('Formulario válido:', this.newOrderForm.value);
+      let priceItem = this.newOrderForm.value.itemPrice;
+      let amountItem = this.newOrderForm.value.amountItem;
+
+      const newOrderSale: OrderSale = {
+        orderSalesID: Math.floor(Math.random() * 1000000),
+        dateCreate: this.dateNow,
+        dateCancellation: null,
+        nameCustomer: this.newOrderForm.value.customerName,
+        itemsPurchased: {
+          nameItem: this.newOrderForm.value.itemName,
+          priceItem: priceItem,
+          amountItem: amountItem
+        },
+        subtotal: priceItem * amountItem,
+        vat: ((priceItem * amountItem) * 0.16),
+        total: ((priceItem * amountItem) * 1.16)
+      }
+
+      this.orderSaleService.addOrderSale(newOrderSale);
+
+
+      this.newOrderForm.reset();
+      console.log('Formulario válido:', newOrderSale);
+      this.orderSales = this.orderSaleService.getOrderSales();
     }
+  }
+
+  verifyNewOrder(): void {
+    const nameItem = this.newOrderForm.value.itemName;
+    const atributoExists = this.orderSaleService.existsAttributesJSON(nameItem);
+    const priceItem = this.newOrderForm.value.itemPrice;
+    let intoIf = false;
+    let showModal = false;
+
+    if (this.orderSales && Array.isArray(this.orderSales)) {
+      for (const item of this.orderSales) {
+        if (atributoExists && item.itemsPurchased && item.itemsPurchased.priceItem === priceItem) {
+          this.addOrder();
+          intoIf = true;
+        } else if (atributoExists && item.itemsPurchased && item.itemsPurchased.priceItem !== priceItem) {
+          if(!showModal){
+            this.openModal();
+            showModal = true;
+          }
+          
+          intoIf = true;
+        } else if (!atributoExists) {
+          this.addOrder();
+          intoIf = true;
+        }
+      }
+
+    }
+
+    if (!intoIf) {
+      this.addOrder();
+    }
+
+
   }
 
 }

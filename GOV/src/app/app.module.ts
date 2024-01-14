@@ -8,6 +8,9 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { CreateOrderComponent } from './views/create-order/create-order.component';
 import { ConsultOrdersComponent } from './views/consult-orders/consult-orders.component';
 import { TableDataSalesComponent } from './components/table-data-sales/table-data-sales.component';
+import { ModalComponent } from './components/modal/modal.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -16,10 +19,13 @@ import { TableDataSalesComponent } from './components/table-data-sales/table-dat
     SidenavComponent,
     CreateOrderComponent,
     ConsultOrdersComponent,
-    TableDataSalesComponent
+    TableDataSalesComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    ModalModule.forRoot(),
     ReactiveFormsModule,
     AppRoutingModule
   ],
