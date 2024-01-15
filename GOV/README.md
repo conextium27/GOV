@@ -1,27 +1,42 @@
-# GOV
+# Sales Order Management 
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.0.
+The website developed in Angular 16 provides an efficient platform for sales order management. Designed with a focus on user experience, the app offers key features such as creating, viewing and canceling sales orders.
 
-## Development server
+## Download project
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+use git clone https://github.com/conextium27/GOV.git  (request access to private repository)
 
-## Code scaffolding
+## Install dependencies
+Node.js https://nodejs.org/en/download (chose your OS)
+Angular 16  npm i @angular/cli@16.2.11
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+cd GOV
+
+Run npm install
+
+## Change branch
+
+use git checkout develop
+
+## Start server
+
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. 
+
 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Technology Stack
 
-## Running end-to-end tests
+Bootstrap 5
+Angular 16
+Angular CLI
+Node 
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+Made by Ricardo Espinosa https://espinosad.site/
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+

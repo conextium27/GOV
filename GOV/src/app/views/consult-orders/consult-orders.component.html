@@ -6,11 +6,11 @@
         <label class="form-label">Creation Date From</label>
         <input type="date" class="form-control" id="startDate" formControlName="startDate">
       </div>
-      <div class="col-md-3 mb-3">
+      <div class="col-md-3 mb-3 ">
         <label class="form-label">Creation Date To</label>
         <input type="date" class="form-control" id="endDate" formControlName="endDate">
       </div>
-      <div class="col-md-3 mb-3">
+      <div class="col-md-3 mb-3 pt-4">
         <button type="button" class="btn btn-primary" (click)="searchCreateSales()">Search Sales</button>
       </div>
     </div>
@@ -18,7 +18,7 @@
 
   <div class="col-md-12 mt-4">
     <h4>Details Sales</h4>
-    <table class="table">
+    <table class="table table-striped table-hover">
       <thead>
         <tr>
           <th>Order ID</th>
@@ -48,14 +48,14 @@
         <label  class="form-label">Cancellation Date To</label>
         <input type="date" class="form-control" id="cancellationDateTo" name="cancellationDateTo">
       </div>
-      <div class="col-md-3 mb-3">
+      <div class="col-md-3 mb-3 pt-4">
         <button type="button" class="btn btn-primary" (click)="searchCancelSales()">Search Canceled Sales</button>
       </div>
     </div>
   </form>
   <div class="col-md-12 mt-4">
     <h4>Details Sales</h4>
-    <table class="table">
+    <table class="table table-striped table-hover">
       <thead>
         <tr>
           <th>Order ID</th>
