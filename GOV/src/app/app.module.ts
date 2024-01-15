@@ -11,7 +11,6 @@ import { ModalComponent } from './components/modal/modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { DatePipe } from '@angular/common';
-import { CustomDatePipe } from './customPipe/pipeDate.pipe';
 
 @NgModule({
   declarations: [
@@ -21,7 +20,6 @@ import { CustomDatePipe } from './customPipe/pipeDate.pipe';
     CreateOrderComponent,
     ConsultOrdersComponent,
     ModalComponent,
-    CustomDatePipe,
   ],
   imports: [
     BrowserModule,
