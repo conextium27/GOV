@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { QueryStorageService, IOrder } from '../../services/queryService/query-storage.service';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { OrderSaleService } from '../../services/local-storage.service';
 import { OrderSale } from '../../models/orderSale.model';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
