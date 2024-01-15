@@ -42,7 +42,7 @@ export class CreateOrderComponent implements OnInit {
         titleModal: 'Item already purchased',
         subtitleModal: 'Item was already used in a previous purchase order,' +
           'the price of the first item must be respected, you have set a price of: ',
-        infoModal: this.newOrderForm.value.itemPrice,
+        infoModal: '$' + this.newOrderForm.value.itemPrice,
       },
     });
   }
@@ -78,36 +78,30 @@ export class CreateOrderComponent implements OnInit {
 
   verifyNewOrder(): void {
     const nameItem = this.newOrderForm.value.itemName;
-    const atributoExists = this.orderSaleService.existsAttributesJSON(nameItem);
+    const itemExists = this.orderSaleService.existsItem(nameItem);
     const priceItem = this.newOrderForm.value.itemPrice;
     let intoIf = false;
     let showModal = false;
 
-    if (this.orderSales && Array.isArray(this.orderSales)) {
-      for (const item of this.orderSales) {
-        if (atributoExists && item.itemsPurchased && item.itemsPurchased.priceItem === priceItem) {
-          this.addOrder();
-          intoIf = true;
-        } else if (atributoExists && item.itemsPurchased && item.itemsPurchased.priceItem !== priceItem) {
-          if(!showModal){
-            this.openModal();
-            showModal = true;
-          }
-          
-          intoIf = true;
-        } else if (!atributoExists) {
-          this.addOrder();
-          intoIf = true;
+    for (const item of this.orderSales) {
+      if (itemExists && item.itemsPurchased && item.itemsPurchased.priceItem === priceItem) {
+        this.addOrder();
+        intoIf = true;
+      } else if (itemExists && item.itemsPurchased && item.itemsPurchased.priceItem !== priceItem) {
+        if (!showModal) {
+          this.openModal();
+          showModal = true;
         }
+
+        intoIf = true;
+      } else if (!itemExists) {
+        this.addOrder();
+        intoIf = true;
       }
-
     }
-
     if (!intoIf) {
       this.addOrder();
     }
-
-
   }
 
 }

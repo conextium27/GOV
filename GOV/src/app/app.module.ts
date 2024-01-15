@@ -11,6 +11,7 @@ import { TableDataSalesComponent } from './components/table-data-sales/table-dat
 import { ModalComponent } from './components/modal/modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { DetailOrderComponent } from './components/detail-order/detail-order.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     CreateOrderComponent,
     ConsultOrdersComponent,
     TableDataSalesComponent,
-    ModalComponent
+    ModalComponent,
+    DetailOrderComponent
   ],
   imports: [
     BrowserModule,

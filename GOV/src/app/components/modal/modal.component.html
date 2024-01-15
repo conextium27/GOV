@@ -1,12 +1,50 @@
 <div class="modal-header">
     <h4 class="modal-title">{{ titleModal }}</h4>
 </div>
-<div class="modal-body">
+<div class="col-md-12  modal-body">
     {{ subtitleModal }}
-    {{ infoModal | currency}}
-
+    {{ infoModal }}
+   
+     <div class="table-responsive" *ngIf=showTableDetail>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Creation Date</th>
+              <th>Cancellation Date</th>
+              <th>Customer Name</th>
+              <th>Item Name</th>
+              <th>Price</th>
+              <th>Amount</th>
+              <th>Subtotal</th>
+              <th>VAT</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td>{{ orderSalesID }}</td>
+                <td>{{ dateCreate}}</td>
+                <td>{{ dateCancellation }}</td>
+                <td>{{ nameCustomer }}</td>
+                <td>{{ nameItem }}</td>
+                <td>{{ priceItem | currency }}</td>
+                <td>{{ amountItem }}</td>
+                <td>{{ subtotal | currency }}</td>
+                <td>{{ vat | currency }}</td>
+                <td>{{ total | currency }}</td>
+             
+            </tr>
+          </tbody>
+        </table>
+      </div> 
 
 </div>
+
 <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="bsModalRef.hide()">Close</button>
+  <div *ngIf=showButtonCancel>
+    <button type="button" class="btn" [ngClass]="btnColor" (click)="sendOrderCanceled(orderSalesID)">{{titleButtonModal}}</button>
+  </div>
+   
+    <button type="button" class="btn btn-secondary"  (click)="bsModalRef.hide()">Close</button>
 </div>

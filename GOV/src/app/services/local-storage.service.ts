@@ -1,32 +1,38 @@
 import { Injectable } from '@angular/core';
 import { OrderSale } from '../models/orderSale.model'
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderSaleService {
-private keyLocalStorage = 'OrderSale';
-private dataLocalSale = new BehaviorSubject<OrderSale[]>([]);
+  private keyLocalStorage = 'OrderSale';
   constructor() { }
 
-  getOrderSales(): OrderSale[]{
+  getOrderSales(): OrderSale[] {
     const dataString = localStorage.getItem(this.keyLocalStorage);
-    return  dataString ? JSON.parse(dataString) : [] ;
+    return dataString ? JSON.parse(dataString) : [];
   }
 
-  existsAttributesJSON(nameItem:string): boolean {
-    const dataAttributes = this.getOrderSales();
-
-    if (dataAttributes !== null && Array.isArray(dataAttributes)) {
-      for (const object of dataAttributes) {
-        if ( object.itemsPurchased.nameItem === nameItem ) {
-          return true;
-        }
+  existsItem(nameItem: string): boolean {
+    const dataItem = this.getOrderSales();
+    for (const object of dataItem) {
+      if (object.itemsPurchased.nameItem === nameItem) {
+        return true;
       }
     }
-
     return false;
+  }
+  canceledOrder(orderSalesID: number, dateCancellation: string){
+    const data = this.getOrderSales();
+    const orderCanceledId = data.find(dato => dato.orderSalesID === orderSalesID);
+    if(orderCanceledId){
+      orderCanceledId.dateCancellation = dateCancellation
+      localStorage.setItem(this.keyLocalStorage, JSON.stringify(data))
+    }
+  }
+  getOrdersByID(orderSalesID: number){
+    const data = this.getOrderSales();
+    return data.find(dato => dato.orderSalesID === orderSalesID)
   }
 
 
@@ -35,4 +41,6 @@ private dataLocalSale = new BehaviorSubject<OrderSale[]>([]);
     ordersSales.push(orderSale);
     localStorage.setItem(this.keyLocalStorage, JSON.stringify(ordersSales));
   }
+
+
 }

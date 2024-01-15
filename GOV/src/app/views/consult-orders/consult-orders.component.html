@@ -1,17 +1,21 @@
 <div class="container mt-4">
   <h2>Consult Create Sales Orders</h2>
-  <form (ngSubmit)="searchCreateSales()">
+  <form [formGroup]="dateCreateFG" >
     <div class="row">
       <div class="col-md-3 mb-3">
-        <label for="creationDateFrom" class="form-label">Creation Date From</label>
-        <input type="date" class="form-control" id="creationDateFrom" name="creationDateFrom">
+        <label class="form-label">Creation Date From</label>
+        <input type="date" class="form-control" id="startDate" formControlName="startDate">
       </div>
       <div class="col-md-3 mb-3">
-        <label for="creationDateTo" class="form-label">Creation Date To</label>
-        <input type="date" class="form-control" id="creationDateTo" name="creationDateTo">
+        <label class="form-label">Creation Date To</label>
+        <input type="date" class="form-control" id="endDate" formControlName="endDate">
       </div>
+      <!-- <div *ngIf="dateCreateFG.get('invalidDate')?.hasError">
+        La fecha de inicio no puede ser posterior a la fecha de fin.
+      </div> -->
+
       <div class="col-md-3 mb-3">
-        <button type="submit" class="btn btn-primary">Search Sales</button>
+        <button type="button" class="btn btn-primary" (click)="searchCreateSales()">Search Sales</button>
       </div>
     </div>
   </form>
@@ -25,55 +29,43 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let dato of datos; let i = index" >
-          <td>
-            {{dato.id}}
+        <tr *ngFor="let data of orderSales; let i = index" >
+          <td>{{ data.orderSalesID }}</td>
+          <td class="text-end ">
+            <button class="btn btn-danger" (click)="canceledOrder(data.orderSalesID)">Cancel Order</button>
           </td>
           <td class="text-end">
-            ♻
+            <button class="btn btn-info" (click)="viewOrderModal(data.orderSalesID)">View Order</button>
           </td>
-          <td class="text-end" (click)="toggleFila(i)">
-            ↓
-          </td>
-         
         </tr>
-        <td *ngIf="filaExpandida !== null && filaExpandida >= 0">
-          <app-table-data-sales></app-table-data-sales>
-        </td>
 
-
-
-        <!-- <tr *ngFor="let articulo of ordenVentaService.ordenVenta.articulos">
-                <td>{{ articulo.nombre }}</td>
-                <td>{{ articulo.precio | currency }}</td>
-                <td>{{ articulo.cantidad }}</td>
-                <td>{{ (articulo.precio * articulo.cantidad) | currency }}</td>
-                <td>{{ ((articulo.precio * articulo.cantidad) * 0.16) | currency }}</td>
-                <td>{{ ((articulo.precio * articulo.cantidad) * 1.16) | currency }}</td> 
-              </tr> -->
       </tbody>
     </table>
+
   </div>
+
+
   <h2>Consult Cancellation Sales Orders</h2>
-  <form (ngSubmit)="searchCancelSales()">
+  <form >
     <div class="row">
       <div class=" col-md-3 mb-3">
-        <label for="cancellationDateFrom" class="form-label">Cancellation Date From</label>
+        <label  class="form-label">Cancellation Date From</label>
         <input type="date" class="form-control" id="cancellationDateFrom" name="cancellationDateFrom">
       </div>
 
       <div class="col-md-3 mb-3">
-        <label for="cancellationDateTo" class="form-label">Cancellation Date To</label>
+        <label  class="form-label">Cancellation Date To</label>
         <input type="date" class="form-control" id="cancellationDateTo" name="cancellationDateTo">
       </div>
 
       <div class="col-md-3 mb-3">
-        <button type="submit" class="btn btn-primary">Search Sales</button>
+        <button type="button" class="btn btn-primary" (click)="searchCancelSales()">Search Canceled Sales</button>
       </div>
     </div>
   </form>
-  <div class="mt-4">
-    <h4>Details Cancellation Sales</h4>
+
+  <div class="col-md-12 mt-4">
+    <h4>Details Sales</h4>
     <table class="table">
       <thead>
         <tr>
@@ -81,22 +73,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>
-            1
+        <tr *ngFor="let data of canceledSales; let i = index" >
+          <td>{{ data.orderSalesID }}</td>
+          <td class="text-end">
+            <button class="btn btn-info" (click)="viewOrderModal(data.orderSalesID)">View Order</button>
           </td>
         </tr>
-        <!-- <tr *ngFor="let articulo of ordenVentaService.ordenVenta.articulos">
-                <td>{{ articulo.nombre }}</td>
-                <td>{{ articulo.precio | currency }}</td>
-                <td>{{ articulo.cantidad }}</td>
-                <td>{{ (articulo.precio * articulo.cantidad) | currency }}</td>
-                <td>{{ ((articulo.precio * articulo.cantidad) * 0.16) | currency }}</td>
-                <td>{{ ((articulo.precio * articulo.cantidad) * 1.16) | currency }}</td> 
-              </tr> -->
+
       </tbody>
     </table>
+
   </div>
+
 
 
 
