@@ -10,10 +10,6 @@
         <label class="form-label">Creation Date To</label>
         <input type="date" class="form-control" id="endDate" formControlName="endDate">
       </div>
-      <!-- <div *ngIf="dateCreateFG.get('invalidDate')?.hasError">
-        La fecha de inicio no puede ser posterior a la fecha de fin.
-      </div> -->
-
       <div class="col-md-3 mb-3">
         <button type="button" class="btn btn-primary" (click)="searchCreateSales()">Search Sales</button>
       </div>
@@ -38,32 +34,25 @@
             <button class="btn btn-info" (click)="viewOrderModal(data.orderSalesID)">View Order</button>
           </td>
         </tr>
-
       </tbody>
     </table>
-
   </div>
-
-
   <h2>Consult Cancellation Sales Orders</h2>
-  <form >
+  <form>
     <div class="row">
       <div class=" col-md-3 mb-3">
         <label  class="form-label">Cancellation Date From</label>
         <input type="date" class="form-control" id="cancellationDateFrom" name="cancellationDateFrom">
       </div>
-
       <div class="col-md-3 mb-3">
         <label  class="form-label">Cancellation Date To</label>
         <input type="date" class="form-control" id="cancellationDateTo" name="cancellationDateTo">
       </div>
-
       <div class="col-md-3 mb-3">
         <button type="button" class="btn btn-primary" (click)="searchCancelSales()">Search Canceled Sales</button>
       </div>
     </div>
   </form>
-
   <div class="col-md-12 mt-4">
     <h4>Details Sales</h4>
     <table class="table">
@@ -79,14 +68,7 @@
             <button class="btn btn-info" (click)="viewOrderModal(data.orderSalesID)">View Order</button>
           </td>
         </tr>
-
       </tbody>
     </table>
-
   </div>
-
-
-
-
-
 </div>

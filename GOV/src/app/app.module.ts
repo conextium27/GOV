@@ -7,11 +7,11 @@ import { FooterComponent } from './components/footer/footer.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { CreateOrderComponent } from './views/create-order/create-order.component';
 import { ConsultOrdersComponent } from './views/consult-orders/consult-orders.component';
-import { TableDataSalesComponent } from './components/table-data-sales/table-data-sales.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { DetailOrderComponent } from './components/detail-order/detail-order.component';
+import { DatePipe } from '@angular/common';
+import { CustomDatePipe } from './customPipe/pipeDate.pipe';
 
 @NgModule({
   declarations: [
@@ -20,9 +20,8 @@ import { DetailOrderComponent } from './components/detail-order/detail-order.com
     SidenavComponent,
     CreateOrderComponent,
     ConsultOrdersComponent,
-    TableDataSalesComponent,
     ModalComponent,
-    DetailOrderComponent
+    CustomDatePipe,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +30,7 @@ import { DetailOrderComponent } from './components/detail-order/detail-order.com
     ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

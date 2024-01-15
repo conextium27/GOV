@@ -4,7 +4,6 @@
 <div class="col-md-12  modal-body">
     {{ subtitleModal }}
     {{ infoModal }}
-   
      <div class="table-responsive" *ngIf=showTableDetail>
         <table class="table">
           <thead>
@@ -24,8 +23,8 @@
           <tbody>
             <tr>
                 <td>{{ orderSalesID }}</td>
-                <td>{{ dateCreate}}</td>
-                <td>{{ dateCancellation }}</td>
+                <td>{{ dateCreate | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ dateCancellation  }}</td>
                 <td>{{ nameCustomer }}</td>
                 <td>{{ nameItem }}</td>
                 <td>{{ priceItem | currency }}</td>
@@ -33,18 +32,11 @@
                 <td>{{ subtotal | currency }}</td>
                 <td>{{ vat | currency }}</td>
                 <td>{{ total | currency }}</td>
-             
             </tr>
           </tbody>
         </table>
       </div> 
-
 </div>
-
 <div class="modal-footer">
-  <div *ngIf=showButtonCancel>
-    <button type="button" class="btn" [ngClass]="btnColor" (click)="sendOrderCanceled(orderSalesID)">{{titleButtonModal}}</button>
-  </div>
-   
     <button type="button" class="btn btn-secondary"  (click)="bsModalRef.hide()">Close</button>
 </div>

@@ -16,8 +16,8 @@ export class ModalComponent {
   showTableDetail: boolean = false;
   showButtonCancel?: boolean = false;
   orderSalesID?: number ;
-  dateCreate?: string = '';
-  dateCancellation?: any = '';
+  dateCreate?: Date;
+  dateCancellation?: Date;
   nameCustomer?: string = '';
   nameItem?: string = '';
   priceItem?: number = 0;
@@ -26,15 +26,8 @@ export class ModalComponent {
   vat?: number = 0;
   total?: number = 0;
 
-
   constructor(public bsModalRef: BsModalRef) {
     this.orderSalesID =  this.orderSalesID;
-
-
   }
-  sendOrderCanceled(orderSalesID:any ){
-    console.log('mesanje del model ', this.orderSalesID)
-  }
-
 
 }

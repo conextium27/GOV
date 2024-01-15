@@ -4,7 +4,6 @@ import { OrderSaleService } from '../../services/local-storage.service';
 import { OrderSale } from '../../models/orderSale.model';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ModalComponent } from '../../components/modal/modal.component';
-import { DetailOrderComponent } from '../../components/detail-order/detail-order.component';
 
 @Component({
   selector: 'app-consult-orders',
@@ -18,6 +17,11 @@ export class ConsultOrdersComponent implements OnInit {
   canceledSales: OrderSale[] = [];
   bsModalRef!: BsModalRef;
   dateNow: string = '';
+  dateRange: any[] = [];
+  getStartDate: Date;
+  getEndDate: Date;
+  startDate: Date;
+  endDate: Date;
 
   constructor(private formBuilder: FormBuilder,
     private OrderSaleService: OrderSaleService,
@@ -26,25 +30,45 @@ export class ConsultOrdersComponent implements OnInit {
       startDate: [''],
       endDate: [''],
     });
+    this.getStartDate = this.dateCreateFG.get('startDate')?.value;
+    this.getEndDate = this.dateCreateFG.get('endDate')?.value;
+    this.startDate = new Date(this.getStartDate);
+    this.endDate = new Date(this.getEndDate);
   }
   ngOnInit() {
     const date = new Date();
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
+    const day = ('0' + date.getDate()).slice(-2);
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
     const year = date.getFullYear();
-    this.dateNow = `${day}/${month}/${year}`.toString()
-
+    this.dateNow = `${year}-${month}-${day}`
   }
 
   searchCreateSales() {
-    this.orderSales = this.OrderSaleService.getOrderSales();
     const attributeToFilter = 'dateCancellation';
-    this.orderSales = this.orderSales.filter(data => data[attributeToFilter] === null);
+    if (this.getStartDate && this.getEndDate) {
+      this.orderSales = this.OrderSaleService.findDateCreateOrders(this.startDate, this.endDate);
+    } else {
+      this.orderSales = this.OrderSaleService.getOrderSales();
+    }
+    if (this.getStartDate && this.getEndDate && this.orderSales.length > 0) {
+      this.orderSales = this.orderSales.filter(data => data[attributeToFilter] === null);
+    } else if (!this.getStartDate && !this.getEndDate) {
+      this.orderSales = this.orderSales.filter(data => data[attributeToFilter] === null);
+    }
   }
   searchCancelSales() {
-    this.canceledSales = this.OrderSaleService.getOrderSales();
     const attributeToFilter = 'dateCancellation';
-    this.canceledSales = this.canceledSales.filter(data => data[attributeToFilter] !== null);
+    if (this.getStartDate && this.getEndDate) {
+      this.orderSales = this.OrderSaleService.findDateCreateOrders(this.startDate, this.endDate);
+    } else {
+      this.canceledSales = this.OrderSaleService.getOrderSales();
+    }
+    if (this.getStartDate && this.getEndDate && this.orderSales.length > 0) {
+      this.canceledSales = this.canceledSales.filter(data => data[attributeToFilter] !== null);
+    } else if (!this.getStartDate && !this.getEndDate) {
+      this.canceledSales = this.canceledSales.filter(data => data[attributeToFilter] !== null);
+    }
+
   }
   cancelOrderModal(orderSalesID: number): void {
     this.bsModalRef = this.modalService.show(ModalComponent, {
@@ -76,9 +100,10 @@ export class ConsultOrdersComponent implements OnInit {
       },
       class: 'modal-xl',
     });
+
   }
   canceledOrder(orderSalesID: number) {
-    this.OrderSaleService.canceledOrder(orderSalesID, this.dateNow )
+    this.OrderSaleService.canceledOrder(orderSalesID, this.dateNow)
     this.searchCreateSales();
     this.cancelOrderModal(orderSalesID);
   }

@@ -7,15 +7,12 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 const routes: Routes = [
   {
     path: '',
-    // component: SidenavComponent,
     children: [
       { path: 'createOrder', component: CreateOrderComponent },
       { path: 'consultOrders', component: ConsultOrdersComponent },
       { path: '', redirectTo: '/createOrder', pathMatch: 'full' },
     ]
-    
   }
-  
 ];
 
 @NgModule({

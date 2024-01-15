@@ -40,7 +40,6 @@
     </div>
     <button type="submit" [disabled]="newOrderForm.invalid" class="btn btn-primary">Create Order</button>
   </form>
-
   <div class="container mt-4">
     <h2>Details of Purchased Items</h2>
     <table class="table table-responsive">
@@ -61,8 +60,8 @@
       <tbody>
         <tr *ngFor="let data of orderSales">
             <td>{{ data.orderSalesID }}</td>
-            <td>{{ data.dateCreate}}</td>
-            <td>{{ data.dateCancellation }}</td>
+            <td>{{ data.dateCreate | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ data.dateCancellation  }}</td>
             <td>{{ data.nameCustomer }}</td>
             <td>{{ data.itemsPurchased.nameItem }}</td>
             <td>{{ data.itemsPurchased.priceItem | currency }}</td>
